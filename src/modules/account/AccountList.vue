@@ -17,6 +17,17 @@
             />
           </v-col>
         </v-row>
+        <v-row
+          v-if="APIError"
+        >
+          <v-col>
+            <v-alert
+              type="error"
+            >
+              {{ APIError }}
+            </v-alert>
+          </v-col>
+        </v-row>
         <v-list
           rounded
           disabled
@@ -47,7 +58,7 @@
                   {{ Account.Amout }} {{ Account.Currency }}
                 </v-col>
                 <v-col>
-                  <span v-if="PreferedCurrency && Account.preferedCurrencyAmout">{{ Account.preferedCurrencyAmout }} {{ PreferedCurrency }}</span>
+                  <span v-if="PreferedCurrency && Account.preferedCurrencyAmout && !APIError">{{ Account.preferedCurrencyAmout }} {{ PreferedCurrency }}</span>
                   <span v-else>-</span>
                 </v-col>
               </v-row>
@@ -69,11 +80,13 @@
 
               <v-text-field
                 v-else
-                label="Outlined"
+                :value="ConsolidatedBalance+' '+PreferedCurrency"
+                label="Sum"
+                class="text-center"
+                hide-details
+                disabled
                 outlined
-              >
-                {{ ConsolidatedBalance }} {{ PreferedCurrency }}
-              </v-text-field>
+              />
             </v-col>
           </v-row>
         </v-container>
@@ -90,7 +103,7 @@
       currencyList: ['EUR', 'USD'],
     }),
     computed: {
-      ...mapGetters('account', ['AccountList', 'PreferedCurrency']),
+      ...mapGetters('account', ['AccountList', 'PreferedCurrency', 'APIError']),
       ...mapGetters('map', ['SelectedCountry']),
       SelectedAccountList () {
         let selectedList = []
@@ -102,16 +115,17 @@
         return selectedList
       },
       ConsolidatedBalance () {
-        let result = this.AccountList.reduce((accumulator, current) => {
-          if (current.preferedCurrencyAmout) {
-            return accumulator + current.preferedCurrencyAmout
-          }
-        })
-        if (result) {
-          return result
-        } else {
-          return null
+        let result = null
+
+        if (!this.APIError) {
+          this.AccountList.forEach((account, index) => {
+            if (account.preferedCurrencyAmout) {
+              result += parseInt(account.preferedCurrencyAmout)
+            }
+          })
         }
+
+        return result
       },
     },
     created () {
@@ -125,3 +139,8 @@
     },
   }
 </script>
+<style>
+.v-input.text-center input {
+ text-align: center;
+}
+</style>

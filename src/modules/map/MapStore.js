@@ -21,7 +21,6 @@ export default {
   },
   mutations: {
     SelectCountryByIndex: (state, selectedIndex) => {
-      // +1 to avoid the title row
       state.SelectedCountry = state.ThreeCharCountryList[selectedIndex][0]
     },
     CountryList: (state, countryList) => {

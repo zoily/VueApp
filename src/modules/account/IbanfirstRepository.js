@@ -1,6 +1,6 @@
 import Axios from 'axios'
 
-const baseURL = 'https://sandbox.ibanfirst.com/api'
+const baseURL = 'https://api.ibanfirst.com/PublicAPI/'
 const repository = Axios.create({
   baseURL: baseURL,
   crossDomain: true,
@@ -8,12 +8,9 @@ const repository = Axios.create({
 
 export default {
   getRate (originalCurrency, destinationCurrency) {
-    let instrument = originalCurrency + '/' + destinationCurrency
-    return repository.get('/Rate/' + instrument, {
+    let instrument = originalCurrency + destinationCurrency
+    return repository.get('/Rate/' + instrument + '/', {
       crossDomain: true,
-      headers: {
-        'Content-Type': 'application/json',
-      },
     })
   },
 }
