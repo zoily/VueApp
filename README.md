@@ -20,23 +20,22 @@ npm run serve
 
 ## Structure du projet
 
- | 
- |- public : Ressources web non transpilées
- |- src
-    |- assets : Autres ressources
-    |- components : Composants visuels 
-    |- modules : Sources web transpilées regroupées par composante métier
-        |- moduleName.vue : Partie visuel du module
-        |- moduleStore.js : Fichier de gestion d'état des données du module
-            |- State : données mises en cache
-            |- Getters : fonctions d'accès à l'état
-            |- Mutations : fonctions de modification de l'état
-            |- Actions : fonctions de traitement des taches asynchrones
-        |- moduleRepository : Point d'accès aux APIs
-    |- views : Pages correspondantes aux diverses routes
-    |- App.vue : Racine de l'app VueJS
-    |- main.js : Fichier racine de l'application web
- |- les fichiers à la racine sont des fichiers de configuration des différents outils
+ - public : Ressources web non transpilées
+ - src
+    - assets : Autres ressources
+    - components : Composants visuels 
+    - modules : Sources web transpilées regroupées par composante métier
+        - moduleName.vue : Partie visuel du module
+        - moduleStore.js : Fichier de gestion d'état des données du module
+            - State : données mises en cache
+            - Getters : fonctions d'accès à l'état
+            - Mutations : fonctions de modification de l'état
+            - Actions : fonctions de traitement des taches asynchrones
+        - moduleRepository : Point d'accès aux APIs
+    - views : Pages correspondantes aux diverses routes
+    - App.vue : Racine de l'app VueJS
+    - main.js : Fichier racine de l'application web
+ - les fichiers à la racine sont des fichiers de configuration des différents outils
 
  ## Production
 
@@ -47,6 +46,7 @@ Generate Docker Image :
 docker build -t ibanfirst:latest .
 
 Publish on heroku :
+```
 -- login heroku
     heroku login
 -- connect container registry
@@ -59,3 +59,4 @@ Publish on heroku :
     heroku container:release ibanfirst
 -- open app
     heroku open
+```
