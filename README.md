@@ -5,9 +5,9 @@ L'application est hébergé [à cette adresse](https://hidden-beach-13976.heroku
 ## VueJS
 
 Les frameworks utilisés sont les suivants :
-[VueJS](https://fr.vuejs.org/)
-[Vuetify](https://vuetifyjs.com/en/)
-[Vue CLI](https://cli.vuejs.org/) (permettant de générer rapidement une solution de base VueJS avec les bons outils, babel, eslint, vuex...)
+ - [VueJS](https://fr.vuejs.org/)
+ - [Vuetify](https://vuetifyjs.com/en/)
+ - [Vue CLI](https://cli.vuejs.org/) (permettant de générer rapidement une solution de base VueJS avec les bons outils, babel, eslint, vuex...)
 
 Pour exécuter la solution en localhost :
  - installer node.js
