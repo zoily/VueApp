@@ -8,15 +8,17 @@ export default {
     AccountList: [],
     PreferedCurrency: null,
     APIError: null,
+    CurrencyList: ['EUR', 'USD'],
   },
   getters: {
     AccountList: state => state.AccountList,
     PreferedCurrency: state => state.PreferedCurrency,
     APIError: state => state.APIError,
+    CurrencyList: state => state.CurrencyList,
   },
   mutations: {
-    SetAccountList: (state, accountList) => {
-      state.AccountList = accountList.counterpart
+    AddAccount: (state, account) => {
+      Vue.set(state.AccountList, state.AccountList.length, account)
     },
     ThrowError: (state, error) => {
       state.APIError = error
@@ -30,6 +32,21 @@ export default {
     },
   },
   actions: {
+    AddAccountAndCountry: ({ commit, dispatch, getters }, account) => {
+      commit('map/AddCountry', account, { root: true })
+      let rateList = []
+      if (getters.PreferedCurrency !== null) {
+        dispatch('GetMyConvertedAmount', { rateList, account }).then(result => {
+          account.preferedCurrencyAmout = result
+          commit('AddAccount', account)
+        }).catch(error => {
+          commit('AddAccount', account)
+          commit('ThrowError', error)
+        })
+      } else {
+        commit('AddAccount', account)
+      }
+    },
     SetPreferedCurrency: ({ commit, dispatch, getters }, chosenCurrency) => {
         commit('ChangePreferedCurrency', chosenCurrency)
         let rateList = []
@@ -42,21 +59,21 @@ export default {
           })
         })
     },
-    GetMyConvertedAmount: ({ getters, commit }, { rateList, account }) => {
+    GetMyConvertedAmount: ({ getters }, { rateList, account }) => {
       return new Promise((resolve, reject) => {
         if (account.Currency === getters.PreferedCurrency) {
           resolve(parseInt(account.Amout.replace(/ /g, '')))
         } else {
           let myRate = rateList.find(rate => { return rate.instrument === account.Currency + getters.PreferedCurrency })
           if (myRate) {
-            resolve(myRate.rate * parseInt(account.Amout.replace(/ /g, '')))
+            resolve(Math.round(myRate.rate * parseInt(account.Amout.replace(/ /g, '')) * 100) / 100)
           } else {
             IBanFirstRepository.getRate(account.Currency, getters.PreferedCurrency).then(result => {
               if (result.data.errorMessage && result.data.errorMessage.length !== 0) {
                 reject(result.data.errorMessage)
               } else {
                 rateList.push(result.data.rate)
-                resolve(result.data.rate.rate * parseInt(account.Amout.replace(/ /g, '')))
+                resolve(Math.round(result.data.rate.rate * parseInt(account.Amout.replace(/ /g, '')) * 100) / 100)
               }
             }).catch(error => {
               console.log(error)
@@ -67,26 +84,13 @@ export default {
         }
       })
     },
-    LoadAccountList: ({ commit, state }) => {
+    LoadAccountList: ({ dispatch }) => {
       return new Promise((resolve, reject) => {
         AccountRepository.getAccounts()
           .then(result => {
-            commit('SetAccountList', result.data)
-
-            let countryList = [['Country', 'Nombre de comptes']]
-            state.AccountList.forEach((account) => {
-              let existInCountryList = false
-              countryList.forEach(country => {
-                if (country[0] === account.CountryCode3) {
-                  country[1]++
-                  existInCountryList = true
-                }
-              })
-              if (!existInCountryList) {
-                countryList.push([account.CountryCode3, 1])
-              }
+            result.data.counterpart.forEach((account) => {
+              dispatch('AddAccountAndCountry', account)
             })
-            commit('map/CountryList', countryList, { root: true })
             resolve()
           })
           .catch(error => {

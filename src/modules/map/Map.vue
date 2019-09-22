@@ -19,6 +19,13 @@
     >
       There are no countries in the account list.
     </v-alert>
+    <v-row
+      v-if="CountryList.length > 0"
+    >
+      <v-col class="text-center">
+        Some countries are still not yet supported by the map. Sorry for the inconvenience
+      </v-col>
+    </v-row>
   </v-card>
 </template>
 
