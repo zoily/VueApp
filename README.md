@@ -9,7 +9,7 @@ Les frameworks utilisés sont les suivants :
  - [Vuetify](https://vuetifyjs.com/en/)
  - [Vue CLI](https://cli.vuejs.org/) (permettant de générer rapidement une solution de base VueJS avec les bons outils, babel, eslint, vuex...)
 
-Pour exécuter la solution en localhost :
+Pour exécuter la solution en localhost (/!\ La map ne pourra accéder à l'API Google et fonctionner normalement) :
  - installer node.js
  - cloner le repo GIT et ouvrir un terminal à la racine du projet
  - Exécuter les commandes suivantes 
