@@ -1,4 +1,4 @@
-# Modele VueJS
+# VueJS + Vuex + NGInx + Docker
 
 Un exemple basique respectant un modèle d'architecture pour un développement en VueJS.
 
