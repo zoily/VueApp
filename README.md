@@ -1,6 +1,8 @@
-# iBanFirst
+# Modele VueJS
 
-L'application est hébergé [à cette adresse](https://hidden-beach-13976.herokuapp.com/)
+Un exemple basique respectant un modèle d'architecture pour un développement en VueJS.
+
+Si ce projet vous est utile n'hésitez pas à me donner un Tip en BAT via brave (cf : https://brave.com/zoi565)
 
 ## VueJS
 
@@ -9,6 +11,7 @@ Les frameworks utilisés sont les suivants :
  - [Vuetify](https://vuetifyjs.com/en/)
  - [Vue CLI](https://cli.vuejs.org/) (permettant de générer rapidement une solution de base VueJS avec les bons outils, babel, eslint, vuex...)
 
+Pour utiliser correctement ESLint, je vous conseil de l'associer avec prettier de visual studio code.
 Pour exécuter la solution en localhost (/!\ La map ne pourra accéder à l'API Google et fonctionner normalement) :
  - installer node.js
  - cloner le repo GIT et ouvrir un terminal à la racine du projet
