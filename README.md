@@ -28,13 +28,14 @@ npm run serve
     - assets : Autres ressources
     - components : Composants visuels 
     - modules : Sources web transpilées regroupées par composante métier
-        - moduleName.vue : Partie visuel du module
-        - moduleStore.js : Fichier de gestion d'état des données du module
-            - State : données mises en cache
-            - Getters : fonctions d'accès à l'état
-            - Mutations : fonctions de modification de l'état
-            - Actions : fonctions de traitement des taches asynchrones
-        - moduleRepository : Point d'accès aux APIs
+        - module : Ensemble des sources du module
+            - moduleName.vue : Partie visuel du module
+            - moduleStore.js : Fichier de gestion d'état des données du module
+                - State : données mises en cache
+                - Getters : fonctions d'accès à l'état
+                - Mutations : fonctions de modification de l'état
+                - Actions : fonctions de traitement des taches asynchrones
+            - moduleRepository : Point d'accès aux APIs
     - views : Pages correspondantes aux diverses routes
     - App.vue : Racine de l'app VueJS
     - main.js : Fichier racine de l'application web
